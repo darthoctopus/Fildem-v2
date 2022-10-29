@@ -10,6 +10,8 @@ from gi.repository import Gio
 
 from fildem.utils.wayland import is_wayland
 
+TARGETSEP = ":"
+
 
 def get_separator():
 	return u'\u0020\u0020\u00BB\u0020\u0020'
@@ -113,7 +115,10 @@ class Menu(Gtk.Menu):
 
 		menu_item.set_accel_path('<MyApp>/Options')
 		if self.callback is None:
-			menu_item.set_property('action_name', 'app.' + str(item.action))
+			if item.target == "":
+				menu_item.set_property('action_name', 'app.' + str(item.action))
+			else:
+				menu_item.set_property('action_name', 'app.' + str(item.action) + TARGETSEP + str(item.target))
 		else:
 			menu_item.connect('activate', self.callback)
 
@@ -349,7 +354,10 @@ class GlobalMenu(Gtk.Application):
 		Adds an action of the foreign app. Do not add actions
 		of the app here
 		"""
+
 		name = str(item.action)
+		if item.target != "":
+			name += TARGETSEP + str(item.target)
 		path = item.path
 		self.actions.append(name)
 		action = Gio.SimpleAction.new(name, None)

@@ -10,6 +10,7 @@ class DbusGtkMenu(object):
 	def __init__(self, session, window):
 		self.results      = {}
 		self.actions      = {}
+		self.targets      = {}
 		self.accels       = {}
 		self.items        = []
 		self.item_actions = []
@@ -35,22 +36,25 @@ class DbusGtkMenu(object):
 			path = '/com/gonzaarcr/appmenu'
 		)
 
-	def activate(self, selection):
+	def activate(self, selection, target=None):
 		action = self.actions.get(selection, '')
-		print(action)
+
+		if target is None:
+			target = self.targets.get(selection, None)
+
+		print(f"{selection}: {action}, {target}")
 
 		if 'app.' in action:
-			self.send_action(action, 'app.', self.app_path)
+			self.send_action(action, 'app.', self.app_path, target)
 		elif 'win.' in action:
-			self.send_action(action, 'win.', self.win_path)
+			self.send_action(action, 'win.', self.win_path, target)
 		elif 'unity.' in action:
-			self.send_action(action, 'unity.', self.menubar_path)
+			self.send_action(action, 'unity.', self.menubar_path, target)
 
-	def send_action(self, name, prefix, path):
-		print(name)
+	def send_action(self, name, prefix, path, target):
 		object    = self.session.get_object(self.bus_name, path)
 		interface = dbus.Interface(object, dbus_interface='org.gtk.Actions')
-		interface.Activate(name.replace(prefix, ''), [], dict())
+		interface.Activate(name.replace(prefix, ''), [target] if target is not None else [], dict())
 		
 	def get_results(self):
 		paths = [self.appmenu_path, self.menubar_path]
@@ -90,6 +94,8 @@ class DbusGtkMenu(object):
 					self.collect_entries(menu[':submenu'], menu_path)
 				elif 'action' in menu:
 					self.actions[menu_item.text] = menu_item.action
+					if menu_item.target != "":
+						self.targets[menu_item.text] = menu_item.target
 					self.top_level_actions.append(menu_item.text)
 					self.items.append(menu_item)
 

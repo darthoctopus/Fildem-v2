@@ -18,6 +18,7 @@ class DbusGtkMenuItem(object):
 		self.shortcut = str(item.get('shortcut', ''))
 		self.label  = item.get('label', '')
 		self.text   = format_label(self.path + [self.label])
+		self.target  = item.get('target', '')
 		self.enabled = enabled
 		self.toggle_type = ''
 		self.toggle_state = False
@@ -62,6 +63,7 @@ class DbusAppMenuItem(object):
 		# Only used on Gtkapps
 		self.section = None
 		self.children = []
+		self.target = item[1].get('target', None)
 
 	def get_shorcut(self, item):
 		shortcut = item.get('shortcut', '')

@@ -19,7 +19,7 @@ def run_keybinder(callback):
 	dbus_menu = DbusMenu()
 
 	if not is_wayland():
-		Keybinder.bind('<Alt>space', callback, dbus_menu)
+		Keybinder.bind('<Ctrl><Alt>P', callback, dbus_menu)
 	# GLib.timeout_add_seconds(1, callback)
 	try:
 		GLib.MainLoop().run()
