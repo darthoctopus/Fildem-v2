@@ -2,6 +2,9 @@
 
 import os
 import threading
+import importlib
+
+from setproctitle import setproctitle
 
 from fildem.handlers.default import HudMenu
 from fildem.handlers.global_menu import GlobalMenu
@@ -31,6 +34,7 @@ def rofi_hud_menu(*args):
 	menu.run()
 
 def main():
+	setproctitle("fildem")
 	run_hud_menu('main')
 
 def global_menu():

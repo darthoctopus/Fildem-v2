@@ -39,7 +39,7 @@ setuptools.setup(
 		('share/applications', ['fildem-hud.desktop'])
 	],
 	install_requires=[
-		'PyGObject>=3.30.0'
+		'PyGObject>=3.30.0', 'setproctitle'
 	],
 	classifiers=[
 		'Programming Language :: Python :: 3',
