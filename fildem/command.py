@@ -1,7 +1,7 @@
 #! /usr/bin/python3
 
+import os
 import threading
-import importlib
 
 from setproctitle import setproctitle
 
@@ -10,9 +10,10 @@ from fildem.handlers.global_menu import GlobalMenu
 from fildem.handlers.rofi import RofiMenu
 
 def run_command(module, function):
-	mod = importlib.import_module(f'fildem.{module}')
-	method = getattr(mod, function)
-	proc = threading.Thread(target=method)
+	args = 'python3 -c "from fildem.%s import %s as run; run()"'
+	args = args % (module, function)
+
+	proc = threading.Thread(target=os.system, args=[args])
 	proc.start()
 
 def run_hud_menu(menu):
