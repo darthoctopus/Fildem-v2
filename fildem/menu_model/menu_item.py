@@ -20,6 +20,7 @@ class DbusGtkMenuItem(object):
 		self.text   = format_label(self.path + [self.label])
 		self.target  = item.get('target', '')
 		self.enabled = enabled
+		self.visible = item.get('visible', True)
 		self.toggle_type = ''
 		self.toggle_state = False
 		#if (self.action == "win.new-terminal"):

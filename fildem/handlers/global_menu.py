@@ -127,6 +127,8 @@ class Menu(Gtk.Menu):
 			menu_item.add_accelerator('activate', self.accel_group, shortcut[0], shortcut[1], Gtk.AccelFlags.VISIBLE)
 		
 		menu_item.set_label(item.label)
+		menu_item.set_visible(item.visible)
+		menu_item.set_no_show_all(True)
 		menu_item.set_use_underline(True)
 		return menu_item
 
