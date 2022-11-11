@@ -215,7 +215,7 @@ class DbusAppMenu(object):
 
 		if len(item[2]):
 			if not self.top_level_menus:
-				self.top_level_menus = list(map(lambda c: c[1].get('label', ''), item[2]))
+				self.top_level_menus = [_[1].get('label', '') for _ in item[2] if _[1].get('visible', True)]
 
 			for child in item[2]:
 				self.collect_entries(child, menu_path)
