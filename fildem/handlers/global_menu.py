@@ -211,7 +211,6 @@ class CommandWindow(Gtk.ApplicationWindow):
 			self.create_menu(current_prefix, current_menu)
 
 	def create_menu(self, name, current_menu):
-		print(name)
 		if len(current_menu) == 0:
 			return
 		menu = Menu(current_menu, 1, self.accel_group)

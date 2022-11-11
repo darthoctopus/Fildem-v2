@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 import gi
+from setproctitle import setproctitle
 
 gi.require_version('Keybinder', '3.0')
 
@@ -27,6 +28,7 @@ def run_keybinder(callback):
 		GLib.MainLoop().quit()
 
 def main():
+	setproctitle("fildem")
 	run_keybinder(default_hud_menu)
 
 

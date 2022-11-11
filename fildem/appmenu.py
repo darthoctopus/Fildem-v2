@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 import dbus
+from setproctitle import setproctitle
 
 from gi.repository import GLib
 from dbus.mainloop.glib import DBusGMainLoop
@@ -20,6 +21,7 @@ def run_service():
 
 
 def main():
+	setproctitle("fildem")
 	DBusGMainLoop(set_as_default=True)
 	session_bus = dbus.SessionBus()
 
