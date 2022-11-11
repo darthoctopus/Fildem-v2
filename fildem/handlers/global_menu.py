@@ -199,6 +199,8 @@ class CommandWindow(Gtk.ApplicationWindow):
 		current_prefix = menus[0].path[0]
 		current_menu = []
 		for item in menus:
+			if not item.visible:
+				continue
 			if item.path[0] == current_prefix:
 				current_menu.append(item)
 			else:
@@ -209,6 +211,7 @@ class CommandWindow(Gtk.ApplicationWindow):
 			self.create_menu(current_prefix, current_menu)
 
 	def create_menu(self, name, current_menu):
+		print(name)
 		if len(current_menu) == 0:
 			return
 		menu = Menu(current_menu, 1, self.accel_group)
